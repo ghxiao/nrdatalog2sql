@@ -4,10 +4,14 @@ Created on Jan 27, 2013
 @author: xiao
 '''
 
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import ply.yacc as yacc
 
-from datalog.model import Variable, Constant, Atom, ClassicLiteral, NafLiteral,\
-    Rule, Program
+from datalog.model import Variable, Constant, NafLiteral, Rule, Program
 
 from datalog.lex import tokens
 
@@ -47,23 +51,25 @@ def p_conjunction(p):
     
 def p_naf_literal_naf(p):
     '''naf_literal     : NAF classic_literal'''
-    p[0] = NafLiteral(p[1])
+    p[0] = p[2]
+    p[0].naf = True
 
 def p_naf_literal(p):
     '''naf_literal     : classic_literal'''
-    p[0] = NafLiteral(p[1])
+    p[0] = p[1]
     
 def p_classic_literal_neg(p):
     '''classic_literal  : NEG atom'''
-    p[0] = ClassicLiteral(p[2], True)
+    p[0] = p[2] 
+    p[0].neg = True
 
 def p_classic_literal(p):    
     '''classic_literal  : atom'''
-    p[0] = ClassicLiteral(p[1])
+    p[0] = p[1]
     
 def p_atom(p):
     '''atom : predicate_name PARAM_OPEN terms PARAM_CLOSE '''
-    p[0] = Atom(p[1], p[3]) 
+    p[0] = NafLiteral(p[1], p[3]) 
     
 def p_predication_name(p):
     '''predicate_name : identifier'''
@@ -88,7 +94,6 @@ def p_basic_term(p):
 
 def p_ground_term(p):
     '''ground_term : SYMBOLIC_CONSTANT'''
-
     p[0] = Constant(p[1])
     
 def p_variable_term(p):
@@ -98,8 +103,8 @@ def p_variable_term(p):
 
 def p_identifier(p):
     '''identifier : SYMBOLIC_CONSTANT 
-            | STRING 
-            | VARIABLE'''
+                  | STRING 
+                  | VARIABLE'''
     p[0] = p[1]
 
 def p_error(p):
@@ -117,5 +122,5 @@ if __name__ == '__main__':
         except EOFError:
             break
         if not s: continue
-        result = parser.parse(s)
-        print "\n".join(str(x) for x in result)
+        prog = parser.parse(s)
+        print prog

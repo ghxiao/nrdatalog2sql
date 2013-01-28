@@ -22,28 +22,18 @@ class Constant(Term):
         return self.name
 
 class NafLiteral(object):
-    def __init__(self, classicLiteral, naf=False):
-        self.classicLiteral = classicLiteral
+    def __init__(self, predicate, terms, neg=False, naf=False):
+        self.predicate = predicate
+        self.terms = terms
+        self.neg = neg
         self.naf = naf
         
     def __str__(self):
-        return "%s%s" % ("not " if self.naf else "", self.classicLiteral)
+        return "%s%s%s(%s)" % (
+            "not " if self.naf else "", 
+            "-" if self.neg else "", 
+            self.predicate, ",".join(str(x) for x in self.terms))
         
-class ClassicLiteral(object):
-    def __init__(self, atom, neg=False):
-        self.atom = atom
-        self.neg = neg 
-        
-    def __str__(self):
-        return "%s%s" % ("-" if self.neg else "", self.atom)
-        
-class Atom(object):
-    def __init__(self, predicate, terms):
-        self.predicate = predicate
-        self.terms = terms
-        
-    def __str__(self):
-        return "%s(%s)" % (self.predicate, ",".join(str(x) for x in self.terms))
 
 class Rule(object):
     def __init__(self, head, body):
