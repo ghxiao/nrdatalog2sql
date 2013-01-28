@@ -1,0 +1,10 @@
+.project
+.pydevproject
+.settings
+
+*.pyc
+
+# ply generated files
+
+parser.out
+parsetab.py
