@@ -31,8 +31,6 @@ def main(argv):
     # vocab is a map predicate_name -> (encode, arity)
     vocab =  read_tbox_name(argv[2])
     
-    # print vocab
-
     depends = nx.topological_sort(G)
     
     sql = "WITH \n" + ",\n".join([ edb2sfw(p, *vocab.get(p)) 
@@ -40,23 +38,13 @@ def main(argv):
 
     sql += ",\n"
 
-    ctes = []
+    ctes = [rules2cte(rules) for rules in 
+            ([r for r in program.rules if r.head.predicate == p] # rules for p
+             for p in depends) 
+            if len(rules) ]
     
-    for p in depends:
-        
-        rules = [r for r in program.rules if r.head.predicate == p]
-
-        if len(rules) == 0:
-            continue
-
-        cte = rules2cte(rules)
-        ctes.append(cte)
-
-    sql += ",\n".join(ctes)
-
     sql += "SELECT COUNT(*) FROM %s" % depends[-1]
     
-#        print cte
     print sql
 
   
@@ -147,4 +135,6 @@ def frag(url):
 
     
 if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        raise 'Usage: python datalog2sql.py datalog.dl vocab.txt'
     main(sys.argv)
