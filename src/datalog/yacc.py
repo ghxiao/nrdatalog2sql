@@ -113,7 +113,6 @@ def p_error(p):
 parser = yacc.yacc(start='program')
 
 if __name__ == '__main__':
-    # Build the parser
     parser = yacc.yacc(start='program')
     
     while True:
