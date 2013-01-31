@@ -70,7 +70,7 @@ def rule2sfw(rule) :
 
     vars = [ '%s AS att_%d' % (v,i) for i,v in enumerate(vars)]
 
-    s = "\n SELECT %s " % ",".join(vars)
+    s = "\n SELECT DISTINCT %s " % ",".join(vars)
 
     f = "\n FROM\n%s" % ",\n".join(
         ["%s AS atom_%d" % (literal.predicate, index) 
@@ -132,6 +132,6 @@ def frag(url):
     
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print 'Usage: python datalog2sql.py datalog.dl vocab.txt'
+        print 'Usage: python nrdatalog2sql.py datalog.dl vocab.txt'
         sys.exit(-1)
     main(sys.argv)
