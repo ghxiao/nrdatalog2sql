@@ -5,9 +5,9 @@ executed directly on PostgreSQL/OWLGres.
 
 ## Dependency
 
-- [PLY (Python Lex-Yacc)](http://www.dabeaz.com/ply/).
-  For Datalog Parser
-- [Networkx](https://networkx.github.com/).
+- [PLY (Python Lex-Yacc)](http://www.dabeaz.com/ply/)
+  Datalog Parser
+- [NetworkX](http://networkx.github.com/)
   Dependency Analysis
   
 These dependencies can be installed by [PIP](http://www.pip-installer.org/) from [PyPI](http://pypi.python.org/pypi)
@@ -20,5 +20,5 @@ We assume that the data is loaded by OWLGres into Postgres.
 $ ./src/datalog/datalog2sql.py datalog.dl tbox_name.txt > query.sql
 ```
 - datalog.dl is a non-recursive Datalog program
-- tbox_name.txt is the output of query `SELECT * FROM tbox_name` FROM OWLGres.
+- tbox_name.txt is the output of query `SELECT * FROM tbox_name` FROM PostgreSQL/OWLGres.
 
