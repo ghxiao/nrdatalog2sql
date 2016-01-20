@@ -1,4 +1,4 @@
-# Non-Recursive Datalog to Datalog Converter
+# Non-Recursive Datalog to SQL Converter
 
 This python project is a converter from Non-Recursive Datalog to SQL Query, which can be
 executed directly on PostgreSQL/OWLGres.
