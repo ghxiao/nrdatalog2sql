@@ -31,7 +31,7 @@ def main(argv):
         for body_literal in rule.body:
             G.add_edge(body_literal.predicate, rule.head.predicate)
     
-    depends = nx.topological_sort(G)
+    depends = list(nx.topological_sort(G))
     
     sql = "WITH \n %s ,\n" % ",\n".join([ edb2sfw(p, *vocab.get(p)) 
                                for p in (set(depends) & set(vocab.keys()))])
@@ -83,7 +83,7 @@ def rule2sfw(rule) :
     conds = list(itertools.chain (*[["atom_%d.att_%d = atom_%d.att_%d" % 
                                      (lit_idx_lst[0][2], lit_idx_lst[0][1], 
                                       lit_idx_lst[k][2], lit_idx_lst[k][1]) 
-                                for k in xrange(1, len(lit_idx_lst))]
+                                for k in range(1, len(lit_idx_lst))]
                                for lit_idx_lst in var2LiteralsMap.values()]))
 
     if len(conds):
