@@ -16,3 +16,6 @@ __pycache__/
 
 # uv project files
 .python-version
+
+# IDE
+.vscode/
