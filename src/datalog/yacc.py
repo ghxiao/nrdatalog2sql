@@ -1,13 +1,4 @@
-'''
-Created on Jan 27, 2013
-
-@author: xiao
-'''
-
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+"""Datalog parser using PLY."""
 
 import ply.yacc as yacc
 
@@ -118,7 +109,7 @@ if __name__ == '__main__':
 
     while True:
         try:
-            s = raw_input('datalog > ')
+            s = input('datalog > ')
         except EOFError:
             break
         if not s: continue

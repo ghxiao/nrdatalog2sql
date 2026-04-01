@@ -1,13 +1,4 @@
-'''
-Created on Jan 27, 2013
-
-@author: xiao
-'''
-
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+"""Datalog lexer using PLY."""
 
 import ply.lex as lex
 
