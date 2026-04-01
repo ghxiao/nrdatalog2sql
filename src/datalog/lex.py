@@ -46,7 +46,7 @@ t_ignore  =         ' \t\n'
 
 # Error handling rule
 def t_error(t):
-    print "Illegal character '%s'" % t.value[0]
+    print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
 lexer = lex.lex()
@@ -63,5 +63,5 @@ if __name__ == '__main__':
     while True:
         tok = lexer.token()
         if not tok: break      # No more input
-        print tok
+        print(tok)
 

@@ -8,6 +8,7 @@ Usage: ./datalog2sql.py datalog.dl tbox_name.txt> query.sql
 
 import sys
 import os
+from functools import reduce
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -42,9 +43,12 @@ def main(argv):
 
     sql += ",\n".join(ctes)
 
-    sql += "\n SELECT COUNT(*) FROM %s" % depends[-1]
+    last = reduce(lambda x,y:y,depends)
+
+
+    sql += "\n SELECT COUNT(*) FROM %s" % last
     
-    print sql
+    print(sql)
   
 
 def rules2cte(rules) :
@@ -119,8 +123,10 @@ def edb2sfw(predicate, encode, type_):
 
 def read_tbox_name(fname):
     with open(fname) as f:
-        f.next()
-        f.next()
+        # f.next()
+        # f.next()
+        f.readline()
+        f.readline()
         # { prdicate : (id, type) }
         return { frag(sp[4].strip()) : (int(sp[0].strip()), int(sp[1].strip()))  
                  for sp in (line.strip().split('|')  
@@ -132,6 +138,6 @@ def frag(url):
     
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print 'Usage: python nrdatalog2sql.py datalog.dl vocab.txt'
+        print('Usage: python nrdatalog2sql.py datalog.dl vocab.txt')
         sys.exit(-1)
     main(sys.argv)
