@@ -1,9 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python*)",
-      "Bash(pip*)",
-      "Bash(git*)"
+      "Bash(uv *)",
+      "Bash(python *)",
+      "Bash(git *)"
     ]
   }
 }

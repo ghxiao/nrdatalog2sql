@@ -8,3 +8,11 @@
 
 parser.out
 parsetab.py
+
+# uv / Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# uv project files
+.python-version
